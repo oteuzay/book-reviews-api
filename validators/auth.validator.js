@@ -37,11 +37,17 @@ export const authValidator = {
     validationCheck,
   ],
   signOut: [
-    body("refreshToken").notEmpty().withMessage("Refresh token is required."),
+    body("refreshToken")
+      .trim()
+      .notEmpty()
+      .withMessage("Refresh token is required."),
     validationCheck,
   ],
   refreshToken: [
-    body("refreshToken").notEmpty().withMessage("Refresh token is required."),
+    body("refreshToken")
+      .trim()
+      .notEmpty()
+      .withMessage("Refresh token is required."),
     validationCheck,
   ],
 };
