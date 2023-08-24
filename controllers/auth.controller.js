@@ -11,7 +11,7 @@ class authController {
 
       const { id, username, email } = await authService.signUp(user);
 
-      res.status(200).json({
+      res.status(201).json({
         message: "User successfully created.",
         user: {
           id: id,
