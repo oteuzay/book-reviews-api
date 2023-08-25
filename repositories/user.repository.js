@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import { Op } from "sequelize";
 
+/* The AuthRepository class provides methods for creating and retrieving user objects from a database. */
 class AuthRepository {
   /**
    * The function creates a new user asynchronously using the User model.
@@ -21,6 +22,17 @@ class AuthRepository {
    */
   async getUserByEmail(email) {
     return await User.findOne({ where: { email: email } });
+  }
+
+  /**
+   * The function retrieves a user by their ID using Sequelize's `findByPk` method.
+   * @param userID - The `userID` parameter is the unique identifier of the user you want to retrieve
+   * from the database. It is used to search for a user record in the `User` table using the `findByPk`
+   * method.
+   * @returns a promise that resolves to the user object with the specified userID.
+   */
+  async getUserById(userID) {
+    return await User.findByPk(userID);
   }
 
   /**
