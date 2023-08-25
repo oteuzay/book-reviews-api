@@ -5,8 +5,8 @@ const Author = sequelize.define(
   "Author",
   {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
       allowNull: false,
     },
@@ -21,17 +21,13 @@ const Author = sequelize.define(
     summary: {
       type: DataTypes.TEXT,
     },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   {
-    timestamps: false,
+    timestamps: true,
     tableName: "authors",
   }
 );
