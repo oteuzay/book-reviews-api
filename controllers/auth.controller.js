@@ -1,6 +1,10 @@
 import authService from "../services/auth.service.js";
 
 class authController {
+  /**
+   * The signUp function creates a new user with the provided username, email, and password, and
+   * returns the user's id, username, and email in the response.
+   */
   async signUp(req, res, next) {
     try {
       const user = {
@@ -24,6 +28,10 @@ class authController {
     }
   }
 
+  /**
+   * The signIn function handles the sign-in process for a user, including validating the credentials,
+   * generating access and refresh tokens, and sending a response with the tokens.
+   */
   async signIn(req, res, next) {
     try {
       const user = {
@@ -45,6 +53,10 @@ class authController {
     }
   }
 
+  /**
+   * The signOut function signs out a user by revoking their refresh token and returns a success
+   * message.
+   */
   async signOut(req, res, next) {
     try {
       await authService.signOut(req.body.refreshToken);
@@ -57,6 +69,10 @@ class authController {
     }
   }
 
+  /**
+   * The function refreshToken is an asynchronous function that refreshes the access token and refresh
+   * token, and sends a response with the new tokens.
+   */
   async refreshToken(req, res, next) {
     try {
       const { accessToken, refreshToken } = await authService.refreshToken(
