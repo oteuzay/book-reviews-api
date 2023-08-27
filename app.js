@@ -12,7 +12,7 @@ import createError from "http-errors";
 import errorHandler from "./middleware/error-handler.middleware.js";
 
 /* Importing allowed origin from configuration. */
-import { ALLOWED_ORIGIN } from "./config/api.config.js";
+import { config } from "./config/api.config.js";
 
 /* Router */
 import mainRoute from "./routes/main.route.js";
@@ -25,7 +25,7 @@ Express application. CORS is a mechanism that allows resources (e.g., APIs) on a
 requested from another domain outside the domain from which the resource originated. */
 app.use(
   cors({
-    origin: ALLOWED_ORIGIN,
+    origin: config.SERVER.ALLOWED_ORIGIN,
   })
 );
 

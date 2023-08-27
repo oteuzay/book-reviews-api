@@ -4,12 +4,7 @@ import redisClient from "../cache/index.cache.js";
 import createError from "http-errors";
 import logger from "../utils/logger.util.js";
 
-import {
-  ACCESS_SECRET_TOKEN,
-  REFRESH_SECRET_TOKEN,
-  EXPIRES_IN_OPTIONS,
-  EXPIRES_IN_REDIS,
-} from "../config/token.config.js";
+import { config } from "../config/api.config.js";
 
 /* The TokenService class provides methods for creating, verifying, and deleting access and refresh
 tokens for a user. */
@@ -24,13 +19,14 @@ class TokenService {
    */
   async createAccessToken(userID) {
     const options = {
-      expiresIn: EXPIRES_IN_OPTIONS.ACCESS_TOKEN,
+      expiresIn: config.AUTH.ACCESS_TOKEN.EXPIRE,
       issuer: "oteuzay.github.io",
       audience: userID,
     };
 
     try {
-      return jsonwebtoken.sign({}, ACCESS_SECRET_TOKEN, options);
+      const accessTokenSecret = config.AUTH.ACCESS_TOKEN.SECRET;
+      return jsonwebtoken.sign({}, accessTokenSecret, options);
     } catch (error) {
       logger.error(error.message);
       throw createError.InternalServerError();
@@ -46,16 +42,17 @@ class TokenService {
    */
   async createRefreshToken(userID) {
     const options = {
-      expiresIn: EXPIRES_IN_OPTIONS.REFRESH_TOKEN,
+      expiresIn: config.AUTH.REFRESH_TOKEN.EXPIRE,
       issuer: "oteuzay.github.io",
       audience: userID,
     };
 
     try {
-      const token = jsonwebtoken.sign({}, REFRESH_SECRET_TOKEN, options);
+      const refreshTokenSecret = config.AUTH.REFRESH_TOKEN.SECRET;
+      const token = jsonwebtoken.sign({}, refreshTokenSecret, options);
 
       await redisClient.SET(userID, token);
-      await redisClient.EXPIRE(userID, EXPIRES_IN_REDIS);
+      await redisClient.EXPIRE(userID, config.REDIS.OPTIONS.EXPIRE);
 
       return token;
     } catch (error) {
@@ -76,7 +73,8 @@ class TokenService {
    */
   async verifyRefreshToken(refreshToken) {
     try {
-      const payload = jsonwebtoken.verify(refreshToken, REFRESH_SECRET_TOKEN);
+      const refreshTokenSecret = config.AUTH.REFRESH_TOKEN.SECRET;
+      const payload = jsonwebtoken.verify(refreshToken, refreshTokenSecret);
       const userID = payload.aud;
       const refreshTokenFromRedis = await redisClient.GET(userID);
 

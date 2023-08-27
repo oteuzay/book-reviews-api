@@ -1,13 +1,13 @@
 import swaggerJSDoc from "swagger-jsdoc";
-import { TITLE, DESCRIPTION, VERSION } from "../config/swagger.config.js";
+import { config } from "../config/api.config.js";
 
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: TITLE,
-      description: DESCRIPTION,
-      version: VERSION,
+      title: config.SWAGGER.INFO.TITLE,
+      description: config.SWAGGER.INFO.DESCRIPTION,
+      version: config.SWAGGER.INFO.VERSION,
     },
     components: {
       securitySchemes: {

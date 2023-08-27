@@ -1,6 +1,6 @@
 import jsonwebtoken from "jsonwebtoken";
 import createError from "http-errors";
-import { ACCESS_SECRET_TOKEN } from "../config/token.config.js";
+import { config } from "../config/api.config.js";
 
 export const authCheck = async (req, res, next) => {
   try {
@@ -13,7 +13,8 @@ export const authCheck = async (req, res, next) => {
     const bearerToken = authHeader.split(" ");
     const token = bearerToken[1];
 
-    const payload = jsonwebtoken.verify(token, ACCESS_SECRET_TOKEN);
+    const accessTokenSecret = config.AUTH.ACCESS_TOKEN.SECRET;
+    const payload = jsonwebtoken.verify(token, accessTokenSecret);
 
     req.payload = payload;
     next();

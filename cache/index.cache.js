@@ -1,12 +1,12 @@
 import redis from "redis";
 import logger from "../utils/logger.util.js";
-import { REDIS_HOST, REDIS_PORT } from "../config/cache.config.js";
+import { config } from "../config/api.config.js";
 
 class RedisClient {
   constructor() {
     this.redisClient = redis.createClient({
-      host: REDIS_HOST,
-      port: REDIS_PORT,
+      host: config.REDIS.SERVER.HOST,
+      port: config.REDIS.SERVER.PORT,
     });
 
     this.redisClient.on("connect", () => {
@@ -31,8 +31,6 @@ class RedisClient {
         "Client has been closed and disconnected from Redis due to SIGINT."
       );
     });
-
-    this.redisClient.connect();
   }
 
   getClient() {

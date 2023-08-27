@@ -1,14 +1,10 @@
 import winston from "winston";
-import {
-  FILE_TRANSPORTS_LEVEL,
-  FILE_TRANSPORTS_FILENAME,
-  CONSOLE_TRANSPORTS_LEVEL,
-} from "../config/logger.config.js";
+import { config } from "../config/api.config.js";
 
 /* Configuration for the file transports in the logger */
 const fileTransports = {
-  level: FILE_TRANSPORTS_LEVEL,
-  filename: FILE_TRANSPORTS_FILENAME,
+  level: config.WINSTON.FILE.LEVEL,
+  filename: config.WINSTON.FILE.FILENAME,
   handleExceptions: true,
   format: winston.format.combine(
     winston.format.timestamp(),
@@ -19,7 +15,7 @@ const fileTransports = {
 
 /* Configuration for the console transports in the logger */
 const consoleTransports = {
-  level: CONSOLE_TRANSPORTS_LEVEL,
+  level: config.WINSTON.CONSOLE.LEVEL,
   handleExceptions: true,
   format: winston.format.combine(
     winston.format.timestamp(),
