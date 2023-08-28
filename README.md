@@ -36,6 +36,12 @@ The Swagger documentation can be found at the following endpoint:
 
 `/api-docs`
 
+## Diagrams
+
+### Database Diagram
+
+<img src="./docs/diagrams/database.png" style="width: 80%"/>
+
 ## Issues
 
 Feel free to create an issue in our repository for any problems, questions, or feedback you have.
