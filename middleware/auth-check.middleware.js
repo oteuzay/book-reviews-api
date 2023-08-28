@@ -2,6 +2,10 @@ import jsonwebtoken from "jsonwebtoken";
 import createError from "http-errors";
 import { config } from "../config/api.config.js";
 
+/**
+ * The `authCheck` function is a middleware that checks if the request has a valid authorization token
+ * and attaches the decoded payload to the request object.
+ */
 export const authCheck = async (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];
