@@ -50,7 +50,7 @@ app.use("/api", mainRoute);
 
 /* Middleware function that is used to handle requests for routes that are not found. */
 app.use(async (req, res, next) => {
-  next(createError.NotFound("Page not found!"));
+  next(createError.NotFound("The page you're looking for doesn't exist."));
 });
 
 app.use(errorHandler);
