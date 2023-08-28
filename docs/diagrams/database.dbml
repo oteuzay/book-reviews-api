@@ -1,0 +1,75 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id uuid [primary key]
+  username varchar
+  email varchar
+  password varchar
+  role varchar 
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+Table categories {
+  id uuid [primary key]
+  title varchar
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+Table subcategories {
+  id uuid [primary key]
+  title varchar
+  category_id uuid [ref: > categories.id]
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+Table authors {
+  id uuid [primary key]
+  name varchar
+  surname varchar
+  summary text
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+Table books {
+  id uuid [primary key]
+  title varchar
+  description text
+  cover_image text
+  subcategory_id uuid [ref: > subcategories.id]
+  author_id uuid [ref: > authors.id]
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+Table reviews {
+  id uuid [primary key]
+  review text
+  user_id uuid [ref: > users.id]
+  book_id uuid [ref: > books.id]
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+Table review_likes {
+  id uuid [primary key]
+  user_id uuid [ref: > users.id]
+  review_id uuid [ref: > reviews.id]
+  status boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+
+
+
