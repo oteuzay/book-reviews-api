@@ -1,11 +1,12 @@
 {
 	"name": "book-reviews-api",
-	"description": "",
+	"description": "This API helps you to serve book reviews in a simple way.",
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
 		"start": "node server",
-		"dev": "nodemon server"
+		"start:dev": "nodemon server",
+		"release": "standard-version"
 	},
 	"dependencies": {
 		"bcrypt": "^5.1.1",
@@ -25,6 +26,7 @@
 		"winston": "^3.10.0"
 	},
 	"devDependencies": {
-		"nodemon": "^3.0.1"
+		"nodemon": "^3.0.1",
+		"standard-version": "^9.5.0"
 	}
 }
