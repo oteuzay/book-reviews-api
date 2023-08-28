@@ -1,6 +1,6 @@
 # Book Reviews API
 
-⏳
+This API helps you to serve book reviews in a simple way.
 
 ## Installation
 
@@ -27,6 +27,14 @@ Make sure to fill in your configuration details in the .env file before running 
 ```sh
   pnpm start
 ```
+
+## Documentation
+
+When you set `NODE_ENV` to `Development` in your environment variables, you gain access to the Swagger documentation.
+
+The Swagger documentation can be found at the following endpoint:
+
+`/api-docs`
 
 ## Issues
 
