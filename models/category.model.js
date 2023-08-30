@@ -1,5 +1,5 @@
-import sequelize from "../database/index.database.js";
 import { DataTypes } from "sequelize";
+import sequelize from "../database/index.database.js";
 
 const Category = sequelize.define(
   "Category",
@@ -14,9 +14,14 @@ const Category = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: true,
+    tableName: "category",
   }
 );
 
