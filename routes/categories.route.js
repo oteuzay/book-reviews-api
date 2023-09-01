@@ -59,4 +59,65 @@ router.post(
   categoriesController.createCategory
 );
 
+/**
+ * @swagger
+ * /api/categories/{categoryID}:
+ *   put:
+ *     summary: Update a category
+ *     tags: [Categories]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: categoryID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *             example:
+ *               title: Mystery
+ *     responses:
+ *       200:
+ *         description: Success
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Internal Server Error
+ */
+router.put("/:categoryID", authCheck, categoriesController.updateCategory);
+
+/**
+ * @swagger
+ * /api/categories/{categoryID}:
+ *   delete:
+ *     summary: Delete a category
+ *     tags: [Categories]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: categoryID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Internal Server Error
+ */
+router.delete("/:categoryID", authCheck, categoriesController.deleteCategory);
+
 export default router;
