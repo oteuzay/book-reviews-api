@@ -1,7 +1,7 @@
 {
   "name": "book-reviews-api",
   "description": "This API helps you to serve book reviews in a simple way.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "start": "node server",
