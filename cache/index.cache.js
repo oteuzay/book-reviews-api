@@ -27,9 +27,7 @@ class RedisClient {
 
     process.on("SIGINT", () => {
       this.redisClient.quit();
-      logger.info(
-        "Client has been closed and disconnected from Redis due to SIGINT."
-      );
+      logger.info("Client has been closed and disconnected from Redis due to SIGINT.");
     });
   }
 

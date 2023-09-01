@@ -51,11 +51,7 @@ router.get("/", authorsValidator.getAuthors, authorsController.getAuthors);
  *       500:
  *         description: Internal Server Error
  */
-router.get(
-  "/:authorID",
-  authorsValidator.getAuthor,
-  authorsController.getAuthor
-);
+router.get("/:authorID", authorsValidator.getAuthor, authorsController.getAuthor);
 
 /**
  * @swagger
@@ -89,12 +85,7 @@ router.get(
  *       500:
  *         description: Internal Server Error
  */
-router.post(
-  "/",
-  authCheck,
-  authorsValidator.createAuthor,
-  authorsController.createAuthor
-);
+router.post("/", authCheck, authorsValidator.createAuthor, authorsController.createAuthor);
 
 /**
  * @swagger
@@ -135,12 +126,7 @@ router.post(
  *       500:
  *         description: Internal Server Error
  */
-router.put(
-  "/:authorID",
-  authCheck,
-  authorsValidator.updateAuthor,
-  authorsController.updateAuthor
-);
+router.put("/:authorID", authCheck, authorsValidator.updateAuthor, authorsController.updateAuthor);
 
 /**
  * @swagger

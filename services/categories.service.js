@@ -12,6 +12,7 @@ class CategoriesService {
     const countCategories = await categoriesRepository.countCategories();
     const categories = await categoriesRepository.getCategories();
 
+    // TODO: Perform the 'map' operation in the service layer for better separation of concerns.
     return {
       categories: categories.map((category) => {
         return {
@@ -70,10 +71,7 @@ class CategoriesService {
     await usersService.isUserAdmin(userID);
     await this.getCategory(categoryID);
 
-    const updatedCategory = await categoriesRepository.updateCategory(
-      categoryID,
-      category
-    );
+    const updatedCategory = await categoriesRepository.updateCategory(categoryID, category);
 
     return {
       id: updatedCategory.id,
@@ -92,9 +90,7 @@ class CategoriesService {
     const category = await this.getCategory(categoryID);
 
     if (category.status == false) {
-      throw createError.BadRequest(
-        "This category has already been deleted or does not exist."
-      );
+      throw createError.BadRequest("This category has already been deleted or does not exist.");
     }
 
     // TODO: Check if the category has any subcategories; if not, proceed with deletion.

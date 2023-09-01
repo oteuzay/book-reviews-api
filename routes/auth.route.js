@@ -140,10 +140,6 @@ router.post("/signout", authValidator.signOut, authController.signOut);
  *       500:
  *         description: Internal Server Error
  */
-router.post(
-  "/refreshToken",
-  authValidator.refreshToken,
-  authController.refreshToken
-);
+router.post("/refreshToken", authValidator.refreshToken, authController.refreshToken);
 
 export default router;

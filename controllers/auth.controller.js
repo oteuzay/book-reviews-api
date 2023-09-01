@@ -75,9 +75,7 @@ class authController {
    */
   async refreshToken(req, res, next) {
     try {
-      const { accessToken, refreshToken } = await authService.refreshToken(
-        req.body.refreshToken
-      );
+      const { accessToken, refreshToken } = await authService.refreshToken(req.body.refreshToken);
 
       res.status(200).json({
         message: "Tokens successfully refreshed.",

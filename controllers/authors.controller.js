@@ -12,10 +12,7 @@ class AuthorsController {
       const currentPage = parseInt(req.params.page) || 1;
       const perPage = 20;
 
-      const { authors, stats } = await authorsService.getAuthors(
-        currentPage,
-        perPage
-      );
+      const { authors, stats } = await authorsService.getAuthors(currentPage, perPage);
 
       res.status(200).json({
         authors,
@@ -56,10 +53,7 @@ class AuthorsController {
         summary: req.body.summary,
       };
 
-      const { id, name, surname } = await authorsService.createAuthor(
-        userID,
-        author
-      );
+      const { id, name, surname } = await authorsService.createAuthor(userID, author);
 
       res.status(201).json({
         message: "Author successfully created.",

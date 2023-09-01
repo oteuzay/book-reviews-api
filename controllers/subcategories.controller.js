@@ -9,8 +9,7 @@ class SubcategoriesController {
     try {
       const categoryID = req.params.categoryID;
 
-      const { category, subcategories } =
-        await subcategoriesService.getSubcategories(categoryID);
+      const { category, subcategories } = await subcategoriesService.getSubcategories(categoryID);
 
       res.status(200).json({
         category: {

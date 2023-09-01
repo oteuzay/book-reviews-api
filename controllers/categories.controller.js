@@ -28,10 +28,7 @@ class CategoriesController {
         title: req.body.title,
       };
 
-      const { id, title } = await categoriesService.createCategory(
-        userID,
-        category
-      );
+      const { id, title } = await categoriesService.createCategory(userID, category);
 
       res.status(201).json({
         message: "Category successfully created.",
@@ -57,11 +54,7 @@ class CategoriesController {
         title: req.body.title,
       };
 
-      const { id, title } = await categoriesService.updateCategory(
-        userID,
-        categoryID,
-        category
-      );
+      const { id, title } = await categoriesService.updateCategory(userID, categoryID, category);
 
       res.status(200).json({
         message: "Category successfully updated.",

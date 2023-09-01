@@ -14,15 +14,10 @@ class AuthService {
    * @returns an object with the properties `id`, `username`, and `email`.
    */
   async signUp(user) {
-    const existingUser = await authRepository.getUserByEmailAndUsername(
-      user.email,
-      user.username
-    );
+    const existingUser = await authRepository.getUserByEmailAndUsername(user.email, user.username);
 
     if (existingUser) {
-      throw createError.Conflict(
-        "User already exists with the provided email or username."
-      );
+      throw createError.Conflict("User already exists with the provided email or username.");
     }
 
     const createdUser = await authRepository.createUser(user);

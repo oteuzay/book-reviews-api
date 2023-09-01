@@ -115,10 +115,7 @@ class AuthorsService {
       );
     }
 
-    const updatedAuthor = await authorRespository.updateAuthor(
-      authorID,
-      author
-    );
+    const updatedAuthor = await authorRespository.updateAuthor(authorID, author);
 
     return {
       id: updatedAuthor.id,
