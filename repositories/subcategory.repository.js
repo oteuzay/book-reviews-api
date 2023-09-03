@@ -11,6 +11,10 @@ class SubcategoryRepository {
     return await Subcategory.findAll({ where: { category_id: categoryID } });
   }
 
+  async getSubcategory(subcategoryID) {
+    return await Subcategory.findByPk(subcategoryID);
+  }
+
   /**
    * The function creates a new subcategory using the provided data.
    * @param subcategory - The parameter "subcategory" is an object that contains the information needed
@@ -19,6 +23,27 @@ class SubcategoryRepository {
    */
   async createSubcategory(subcategory) {
     return await Subcategory.create(subcategory);
+  }
+
+  async updateSubcategory(subcategoryID, subcategory) {
+    const [updatedRowCount] = await Subcategory.update(subcategory, {
+      where: { id: subcategoryID },
+      returning: true,
+    });
+
+    if (updatedRowCount === 0) {
+      return null;
+    }
+
+    return await Subcategory.findOne({
+      attributes: ["id", "title"],
+      where: { id: subcategoryID },
+    });
+  }
+
+  async deleteSubcategory(subcategory) {
+    subcategory.status = false;
+    return await subcategory.save();
   }
 }
 
