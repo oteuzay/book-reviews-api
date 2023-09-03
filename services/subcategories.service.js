@@ -20,6 +20,16 @@ class SubcategoriesService {
     };
   }
 
+  async getSubcategory(subcategoryID) {
+    const subcategory = await subcategoryRepository.getSubcategory(subcategoryID);
+
+    if (!subcategory) {
+      throw createError.NotFound("The requested subcategory was not found.");
+    }
+
+    return subcategory;
+  }
+
   /**
    * The function creates a subcategory with a given title under a specified category, after checking
    * if the user is an admin and if the category exists.
@@ -43,6 +53,34 @@ class SubcategoriesService {
     return {
       title: createdSubcategory.title,
     };
+  }
+
+  async updateSubcategory(userID, subcategoryID, subcategory) {
+    await usersService.isUserAdmin(userID);
+    await this.getSubcategory(subcategoryID);
+
+    const updatedSubcategory = await subcategoryRepository.updateSubcategory(
+      subcategoryID,
+      subcategory
+    );
+
+    return {
+      id: updatedSubcategory.id,
+      title: updatedSubcategory.title,
+    };
+  }
+
+  async deleteSubcategory(userID, subcategoryID) {
+    await usersService.isUserAdmin(userID);
+    const subcategory = await this.getSubcategory(subcategoryID);
+
+    if (subcategory.status == false) {
+      throw createError.BadRequest("This subcategory has already been deleted or does not exist.");
+    }
+
+    await subcategoryRepository.deleteSubcategory(subcategory);
+
+    return;
   }
 }
 
