@@ -54,6 +54,53 @@ class SubcategoriesController {
       next(error);
     }
   }
+
+  /**
+   * The function updates a subcategory in a database and returns a success message with the updated
+   * subcategory title.
+   */
+  async updateSubcategory(res, req, next) {
+    try {
+      const userID = req.payload.aud;
+      const subcategoryID = req.params.subcategoryID;
+      const subcategory = {
+        title: req.body.title,
+      };
+
+      const { title } = await subcategoriesService.updateSubcategory(
+        userID,
+        subcategoryID,
+        subcategory
+      );
+
+      res.status(200).json({
+        message: "Subcategory successfully updated.",
+        subcategory: {
+          title: title,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * The function deletes a subcategory and returns a success message.
+   */
+  async deleteSubcategory(res, req, next) {
+    const userID = req.payload.aud;
+    const subcategoryID = req.params.subcategoryID;
+
+    await subcategoriesService.deleteSubcategory(userID, subcategoryID);
+
+    try {
+      res.status(200).json({
+        message: "Subcategory successfully deleted.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new SubcategoriesController();
