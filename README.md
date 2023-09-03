@@ -1,4 +1,4 @@
-# Book Reviews API
+# Book Reviews API [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/oteuzay/book-reviews-api/blob/main/LICENSE.md)
 
 This API helps you to serve book reviews in a simple way.
 
