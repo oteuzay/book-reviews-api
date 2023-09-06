@@ -14,14 +14,15 @@ class CategoryRepository {
   }
 
   /**
-   * The function `getCategories` retrieves all categories.
-   * @returns an array of categories that have a status of true.
+   * The function `getCategories` retrieves all categories with a status of true, ordered by their sort order.
+   * @returns an array of categories that meet the specified conditions.
    */
   async getCategories() {
     const categories = await Category.findAll({
       where: {
         status: true,
       },
+      order: [["sort_order", "ASC"]],
     });
 
     return categories;
@@ -63,7 +64,7 @@ class CategoryRepository {
     }
 
     return await Category.findOne({
-      attributes: ["id", "title"],
+      attributes: ["id", "title", "sort_order"],
       where: { id: categoryID },
     });
   }
