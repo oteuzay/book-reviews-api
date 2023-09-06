@@ -15,6 +15,10 @@ const Subcategory = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    sort_order: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
