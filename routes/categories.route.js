@@ -5,9 +5,7 @@
  */
 import express from "express";
 import categoriesController from "../controllers/categories.controller.js";
-import subcategoriesController from "../controllers/subcategories.controller.js";
 import categoriesValidator from "../validators/categories.validator.js";
-import subcategoriesValidator from "../validators/subcategories.validator.js";
 import { authCheck } from "../middleware/auth-check.middleware.js";
 
 const router = express.Router();
@@ -16,8 +14,8 @@ const router = express.Router();
  * @swagger
  * /api/categories:
  *   get:
- *     summary: Get all categories
- *     description:
+ *     summary: Retrieve all categories
+ *     description: Get a list of all available categories.
  *     tags: [Categories]
  *     responses:
  *       200:
@@ -31,7 +29,8 @@ router.get("/", categoriesController.getCategories);
  * @swagger
  * /api/categories:
  *   post:
- *     summary: Create a category
+ *     summary: Create a new category
+ *     description: This operation is restricted to administrators only.
  *     tags: [Categories]
  *     security:
  *       - bearerAuth: []
@@ -44,8 +43,11 @@ router.get("/", categoriesController.getCategories);
  *             properties:
  *               title:
  *                 type: string
+ *               sort_order:
+ *                 type: integer
  *             example:
  *               title: Fantasy
+ *               sort_order: 1
  *     responses:
  *       201:
  *         description: Success
@@ -66,6 +68,7 @@ router.post(
  * /api/categories/{categoryID}:
  *   put:
  *     summary: Update a category
+ *     description: This operation is restricted to administrators only.
  *     tags: [Categories]
  *     security:
  *       - bearerAuth: []
@@ -82,10 +85,13 @@ router.post(
  *           schema:
  *             type: object
  *             properties:
+ *               sort_order:
+ *                 type: integer
  *               title:
  *                 type: string
  *             example:
  *               title: Mystery
+ *               sort_order: 2
  *     responses:
  *       200:
  *         description: Success
@@ -108,6 +114,7 @@ router.put(
  * /api/categories/{categoryID}:
  *   delete:
  *     summary: Delete a category
+ *     description: This operation is restricted to administrators only.
  *     tags: [Categories]
  *     security:
  *       - bearerAuth: []
@@ -130,71 +137,6 @@ router.delete(
   authCheck,
   categoriesValidator.deleteCategory,
   categoriesController.deleteCategory
-);
-
-/**
- * @swagger
- * /api/categories/{categoryID}/subcategories:
- *   get:
- *     summary: Get subcategories of a specific category
- *     description:
- *     tags: [Categories]
- *     parameters:
- *       - in: path
- *         name: categoryID
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Success
- *       500:
- *         description: Internal Server Error
- */
-router.get(
-  "/:categoryID/subcategories",
-  subcategoriesValidator.getSubcategories,
-  subcategoriesController.getSubcategories
-);
-
-/**
- * @swagger
- * /api/categories/{categoryID}/subcategories:
- *   post:
- *     summary: Create a new subcategory for a specific category
- *     tags: [Categories]
- *     parameters:
- *       - in: path
- *         name: categoryID
- *         required: true
- *         schema:
- *           type: string
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *             example:
- *               title: Local Fantasy
- *     responses:
- *       201:
- *         description: Success
- *       401:
- *         description: Unauthorized
- *       500:
- *         description: Internal Server Error
- */
-router.post(
-  "/:categoryID/subcategories",
-  authCheck,
-  subcategoriesValidator.createSubcategories,
-  subcategoriesController.createSubcategory
 );
 
 export default router;
