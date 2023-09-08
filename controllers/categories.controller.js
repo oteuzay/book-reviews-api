@@ -2,15 +2,15 @@ import categoriesService from "../services/categories.service.js";
 
 class CategoriesController {
   /**
-   * The function retrieves categories and stats from a service and sends them as a JSON response.
+   * The function `getCategories` retrieves categories and their count.
    */
   async getCategories(req, res, next) {
     try {
-      const { categories, stats } = await categoriesService.getCategories();
+      const { categories, count_categories } = await categoriesService.getCategories();
 
       res.status(200).json({
-        categories: categories,
-        stats: stats,
+        categories,
+        count_categories,
       });
     } catch (error) {
       next(error);
