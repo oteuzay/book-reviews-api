@@ -14,24 +14,27 @@ class CategoriesService {
   }
 
   /**
-   * The function `getCategories` retrieves categories and their statistics from a repository.
-   * @returns an object with two properties: `categories` and `stats`.
+   * The function `getCategories` retrieves a list of categories.
+   * @returns an object with two properties: `categories` and `count_categories`.
    */
   async getCategories() {
     const countCategories = await this.countCategories();
-    const categories = await categoriesRepository.getCategories();
+    const getCategories = await categoriesRepository.getCategories();
+
+    const categoriesPromises = getCategories.map(async (category) => {
+      return {
+        id: category.id,
+        title: category.title,
+        sort_order: category.sort_order,
+        count_subcategories: await subcategoriesService.countSubcategories(category.id),
+      };
+    });
+
+    const categories = await Promise.all(categoriesPromises);
 
     return {
-      categories: categories.map((category) => {
-        return {
-          id: category.id,
-          title: category.title,
-          sort_order: category.sort_order,
-        };
-      }),
-      stats: {
-        countCategories: countCategories,
-      },
+      categories: categories,
+      count_categories: countCategories,
     };
   }
 
