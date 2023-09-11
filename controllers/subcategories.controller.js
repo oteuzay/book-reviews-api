@@ -2,25 +2,16 @@ import subcategoriesService from "../services/subcategories.service.js";
 
 class SubcategoriesController {
   /**
-   * The function retrieves subcategories for a given category ID and returns them along with the
-   * category title in a JSON response.
+   * The function `getSubcategories` is an asynchronous function that retrieves subcategories based on
+   * a given category ID and sends a JSON response with the subcategories.
    */
   async getSubcategories(req, res, next) {
     try {
       const categoryID = req.params.categoryID;
-
-      const { category, subcategories } = await subcategoriesService.getSubcategories(categoryID);
+      const { category } = await subcategoriesService.getSubcategories(categoryID);
 
       res.status(200).json({
-        category: {
-          title: category.title,
-          subcategories: subcategories.map((subcategory) => {
-            return {
-              id: subcategory.id,
-              title: subcategory.title,
-            };
-          }),
-        },
+        category,
       });
     } catch (error) {
       next(error);
@@ -28,7 +19,8 @@ class SubcategoriesController {
   }
 
   /**
-   * The function creates a subcategory with a given title under a specific category for a user.
+   * The function creates a subcategory with the given title and sort order under a specific category,
+   * and returns the created subcategory.
    */
   async createSubcategory(req, res, next) {
     try {
@@ -36,9 +28,10 @@ class SubcategoriesController {
       const categoryID = req.params.categoryID;
       const subcategory = {
         title: req.body.title,
+        sort_order: req.body.sort_order,
       };
 
-      const { title } = await subcategoriesService.createSubcategory(
+      const createdSubcategory = await subcategoriesService.createSubcategory(
         userID,
         categoryID,
         subcategory
@@ -46,9 +39,7 @@ class SubcategoriesController {
 
       res.status(201).json({
         message: "Subcategory successfully created.",
-        subcategory: {
-          title: title,
-        },
+        subcategory: createdSubcategory.subcategory,
       });
     } catch (error) {
       next(error);
@@ -56,18 +47,20 @@ class SubcategoriesController {
   }
 
   /**
-   * The function updates a subcategory in a database and returns a success message with the updated
-   * subcategory title.
+   * The function `updateSubcategory` updates a subcategory with the provided information and returns
+   * the updated subcategory.
    */
-  async updateSubcategory(res, req, next) {
+  async updateSubcategory(req, res, next) {
     try {
       const userID = req.payload.aud;
       const subcategoryID = req.params.subcategoryID;
       const subcategory = {
         title: req.body.title,
+        sort_order: req.body.sort_order,
+        category_id: req.body.categoryID,
       };
 
-      const { title } = await subcategoriesService.updateSubcategory(
+      const updatedSubcategory = await subcategoriesService.updateSubcategory(
         userID,
         subcategoryID,
         subcategory
@@ -75,9 +68,7 @@ class SubcategoriesController {
 
       res.status(200).json({
         message: "Subcategory successfully updated.",
-        subcategory: {
-          title: title,
-        },
+        subcategory: updatedSubcategory,
       });
     } catch (error) {
       next(error);
@@ -87,13 +78,13 @@ class SubcategoriesController {
   /**
    * The function deletes a subcategory and returns a success message.
    */
-  async deleteSubcategory(res, req, next) {
-    const userID = req.payload.aud;
-    const subcategoryID = req.params.subcategoryID;
-
-    await subcategoriesService.deleteSubcategory(userID, subcategoryID);
-
+  async deleteSubcategory(req, res, next) {
     try {
+      const userID = req.payload.aud;
+      const subcategoryID = req.params.subcategoryID;
+
+      await subcategoriesService.deleteSubcategory(userID, subcategoryID);
+
       res.status(200).json({
         message: "Subcategory successfully deleted.",
       });
