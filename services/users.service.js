@@ -13,10 +13,28 @@ class UsersService {
     const user = await userRepository.getUserByID(userID);
 
     if (!user) {
-      throw httpError.NotFound("We couldn't find the user you're looking for.");
+      throw createError.NotFound("We couldn't find the user you're looking for.");
     }
 
     return user;
+  }
+
+  /**
+   * The function `getUser` retrieves a user by their ID and returns an object with the user's ID,
+   * username, and null reviews.
+   * @param userID - The `userID` parameter is the unique identifier of the user for whom we want to
+   * retrieve information.
+   * @returns an object with the properties "id", "username", and "reviews". The "id" and "username"
+   * properties are taken from the user object retrieved by calling the "getUserByID" function.
+   */
+  async getUser(userID) {
+    const user = await this.getUserByID(userID);
+
+    return {
+      id: user.id,
+      username: user.username,
+      reviews: null,
+    };
   }
 
   /**
